@@ -34,7 +34,6 @@ public class Test {
 //       列表新建线路
         driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[2]/span[2]/a")).click();
         Thread.sleep(3000);
-
         if (driver.findElement(By.xpath("/html/body/div[11]/div[1]/section/div/p[1]/span[1]/input")).isEnabled()){
             driver.findElement(By.xpath("/html/body/div[11]/div[1]/section/div/p[1]/span[1]/input")).sendKeys("xmy测试");
             driver.findElement(By.xpath("/html/body/div[11]/div[1]/section/div/p[3]/span[1]/input")).sendKeys("shanghai");
