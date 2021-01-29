@@ -1,20 +1,14 @@
-import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
-import sun.awt.SunHints;
 
-import javax.swing.*;
-import java.awt.*;
-import java.security.Key;
 
 /**
  * @author: 徐梦雨
  * @date: 2021/1/28 17:49
- * @description:跳过登录对线路的基本信息、库存进行修改并提交,
+ * @description:跳过登录对线路的基本信息进行修改并提交,
  * 设置cookie前需要访问一次网页，设置cookie后再访问一次网页以解决invalid cookie domain
+ * 页面通过js缩放大小
  */
 public class UpdateProduct {
     public static void main(String[] args) throws InterruptedException {
@@ -39,6 +33,11 @@ public class UpdateProduct {
         driver.manage().addCookie(cookie2);
         System.out.println("cookie数量为"+driver.manage().getCookies().size());
         driver.get("http://ms.hcgtravels.com/product/ProductSegMents/Index?id=1207244#tab=0");
+
+        //        页面缩小50%
+        JavascriptExecutor executor= (JavascriptExecutor) driver;
+        executor.executeScript("document.body.style.zoom='0.5'");
+
 //        线路基本信息填写提交,亮点推荐
         driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[3]/div/div[1]/div/div[1]/div[2]/p[5]/textarea")).sendKeys("这是亮点推荐");
 //       选择目的地
@@ -72,13 +71,14 @@ public class UpdateProduct {
         System.out.println("选完了账务归属，点击了操作输入框");
         Thread.sleep(1000);
 //        滚动到保存按钮并点击
-//        action.moveToElement(driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[3]/div/div[2]/a[1]")));
-//        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[3]/div/div[2]/a[1]")).click();
+        action.moveToElement(driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[3]/div/div[2]/a[1]")));
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[3]/div/div[2]/a[1]")).click();
         System.out.println("点击了保存按钮");
 //        加载完成后滚动到提交按钮并点击
         Thread.sleep(6000);
         action.moveToElement(driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[3]/div/div[1]/div/div[4]/div[2]/p[3]/span/select/option[2]")));
         Thread.sleep(3000);
+        System.out.println("滚动到提交按钮");
         driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[3]/div/div[1]/div/div[4]/div[2]/p[3]/span/select/option[2]")).click();
         System.out.println("点击了提交按钮");
 
